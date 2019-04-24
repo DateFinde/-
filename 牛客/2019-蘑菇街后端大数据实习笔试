@@ -1,0 +1,76 @@
+1.派分糖果
+有N个孩子站成一排，每个孩子有一个分值。给这些孩子派发糖果，需要满足如下需求：
+1、每个孩子至少分到一个糖果
+2、分值更高的孩子比他相邻位的孩子获得更多的糖果
+求至少需要分发多少糖果？
+
+输入描述:
+0,1,0
+输出描述:
+4
+
+输入例子1:
+5,4,1,1
+输出例子1:
+7
+
+#通过仅20%
+data=input().split(',')
+data=list(map(int,data))
+
+sum=0
+while data:
+    Min = min(data)
+    for i in range(len(data)):
+        if data[i]>=Min:
+            sum+=1
+    for i in data:
+        if i==Min:
+            data.remove(i)
+
+print(sum)
+
+
+
+
+2.字符串的排列
+输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+
+输入描述:
+输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母,例如ac
+输出描述:
+[ac, ca]
+
+输入例子1:
+acc
+输出例子1:
+[acc, cac, cca]
+
+//通过100%
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string word;
+    cin>>word;
+    sort(word.begin(),word.end());
+
+    vector<string> data;
+    do{
+        data.push_back(word);
+    }while(next_permutation(word.begin(),word.end()));
+
+    cout<<"[";
+    for(int i=0;i<data.size();++i)
+    {
+        cout<<data[i];
+        if(i!=data.size()-1)
+        {
+            cout<<", ";
+        }
+    }
+    cout<<"]";
+
+    return 0;
+}
