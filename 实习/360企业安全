@@ -1,0 +1,176 @@
+1.装盒问题
+对于有n个球，相同颜色可以放在一个盒子中，不允许一个盒子有两种颜色；且每个盒子球数要相同，相同颜色球可以放在不同盒子中。
+用数字代表颜色种类。
+
+输入：
+第一行：球数n
+第二行：输入代表球颜色的数字。
+
+输出：
+最少需要的盒子数；若不满足条件则输出0。
+
+/*
+先统计每种颜色个数及最少颜色的个数，统计总个数是否可以整除
+通过率仅为83%
+*/
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    map<int,int> number;
+    for(int i=0;i<n;++i)
+    {
+        int temp;
+        cin>>temp;
+        if(number.find(temp)==number.end())
+        {
+            number[temp]=1;
+        }
+        else
+        {
+            number[temp]++;
+        }
+    }
+
+    map<int,int>::iterator it=number.begin();
+    int Min=99999;
+    int sum=0;
+    for(map<int,int>::iterator it=number.begin();it!=number.end();++it)
+    {
+        if((it->second)<Min)
+        {
+            Min=it->second;
+        }
+        sum+=it->second;
+    }
+
+    bool flag=true;
+    for(map<int,int>::iterator it=number.begin();it!=number.end();++it)
+    {
+        if((it->second%Min)!=0)
+        {
+            flag=false;
+            break;
+        }
+    }
+    if(flag)
+    {
+        cout<<sum/Min;
+    }
+    else
+    {
+        cout<<0;
+    }
+
+    return 0;
+}
+
+
+
+2.最多步数
+给定数值矩阵，只能由大到小运动，最多行走的步数。
+
+输入：
+第一行：矩阵的行数与列数
+第二行：逐行输入矩阵元素
+
+输出：
+步数大小。
+
+
+
+/*
+利用回溯法，全通过
+但是leetcode有更好的方法
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+bool check(const vector<vector<int> > &matrix,int rows,int cols,int Xindex,int Yindex,int x,int y)
+{
+    if(x>=0&&x<rows&&y>=0&&y<cols&&
+       Xindex>=0&&Xindex<rows&&Yindex>=0&&Yindex<cols&&
+       matrix[Xindex][Yindex]<matrix[x][y])
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+int longpath(const vector<vector<int> > &matrix,int rows,int cols,int x,int y)
+{
+    int step1=1;
+    int step2=1;
+    int step3=1;
+    int step4=1;
+    if(check(matrix,rows,cols,x,y,x-1,y))
+    {
+        step1=step1>longpath(matrix,rows,cols,x-1,y)?step1:longpath(matrix,rows,cols,x-1,y);
+        ++step1;
+    }
+
+    if(check(matrix,rows,cols,x,y,x,y-1))
+    {
+        step2=step2>longpath(matrix,rows,cols,x,y-1)?step2:longpath(matrix,rows,cols,x,y-1);
+        ++step2;
+    }
+
+    if(check(matrix,rows,cols,x,y,x+1,y))
+    {
+        step3=step3>longpath(matrix,rows,cols,x+1,y)?step3:longpath(matrix,rows,cols,x+1,y);
+        ++step3;
+    }
+
+    if(check(matrix,rows,cols,x,y,x,y+1))
+    {
+        step4=step4>longpath(matrix,rows,cols,x,y+1)?step4:longpath(matrix,rows,cols,x,y+1);
+        ++step4;
+    }
+    int step=step1>step2?step1:step2;
+    int temp=step3>step4?step3:step4;
+    return step>temp?step:temp;
+}
+
+int main() {
+    int res;
+
+    int rows = 0;
+    int cols = 0;
+    cin >> rows >> cols;
+    vector<vector<int> > matrix;
+    for(int i=0;i<rows;i++)
+    {
+        vector<int> temp;
+        for(int j=0;j<cols;j++)
+        {
+            int tmp;
+            cin >> tmp;
+            temp.push_back(tmp);
+        }
+        matrix.push_back(temp);
+    }
+
+    int row;
+    int col;
+    int min=999999;
+    for(int i=0;i<matrix.size();++i)
+    {
+        for(int j=0;j<matrix[i].size();++j)
+        {
+            if(matrix[i][j]<min)
+            {
+                min=matrix[i][j];
+                row=i;
+                col=j;
+            }
+        }
+    }
+    res = longpath(matrix,rows,cols,row,col);
+    cout << res << endl;
+
+    return 0;
+
+}
