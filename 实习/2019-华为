@@ -1,0 +1,168 @@
+1.给定字符串，判定是否满足三个条件：
+1）长度为偶数
+2）反转后与原字符串相等
+3）对于第i（i为偶数且从0开始）个字符，与第i+1相等
+
+输入：
+可能多组字符串
+输出：
+若是满足，输出字符；否则输出false.
+
+
+/*
+只是普通字符串的操作，比较简单，通过率100%
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+bool defination2(const string &data)
+{
+    int length=data.size();
+    if(length%2==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool defination1(const string &data)
+{
+    int length=data.size();
+    for(int i=0;i<length/2;++i)
+    {
+        if(data[i]!=data[length-i-1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool defination3(const string &data)
+{
+    int length=data.size();
+    for(int i=1;i<length;i=i+2)
+    {
+        if(data[i-1]!=data[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Print(const string &data)
+{
+    int len=data.size();
+    for(int i=1;i<len;i=i+2)
+    {
+        cout<<data[i];
+    }
+}
+
+int main()
+{
+    string word;
+    map<string,int> result;
+    while(cin>>word)
+    {
+        if(defination3(word)&&defination2(word)&&defination1(word))
+        {
+            result[word]=1;
+        }
+        else
+        {
+            result[word]=0;
+        }
+    }
+
+    for(map<string,int>::iterator it=result.begin();it!=result.end();++it)
+    {
+        if(it->second)
+        {
+            Print(it->first);
+            cout<<endl;
+        }
+        else
+        {
+            cout<<"false"<<endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+2.某城市n个站点，M个公交车，给定特点车站查找最少花费。其中公交车从始发站到终点站不停。
+输入：
+第一行，先是站点数n，公交车线路m
+m行，公交车Id,始发站id,终点站id,车费
+起点，终点
+
+/*
+个人理解就是最短路的花费问题，但是只通过20%
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+int Max=9999;
+int main()
+{
+    int cost=-1;
+    int n,m;
+    cin>>n>>m;
+    int data[n][n];
+    for(int i=0;i<n;++i)
+    {
+        for(int j=0;j<n;++j)
+        {
+            data[i][j]=Max;
+        }
+    }
+    for(int i=0;i<m;++i)
+    {
+        int id,Start,End,temp;
+        cin>>id>>Start>>End>>temp;
+        Start--;
+        --End;
+        data[Start][End]=temp;
+        data[End][Start]=temp;
+    }
+
+    int xPos,yPos;
+    cin>>xPos>>yPos;
+    for(int i=0;i<n;++i)
+    {
+        for(int j=0;j<n;++j)
+        {
+            for(int k=0;k<n;++k)
+            {
+                if(data[i][k]+data[k][j]<data[i][j])
+                {
+                    data[i][j]=data[i][k]+data[k][j];
+                }
+            }
+        }
+    }
+    if(data[xPos-1][yPos-1]>=Max)
+    {
+        cout<<"NA";
+    }
+    else
+    {
+        cout<<data[xPos-1][yPos-1];
+    }
+
+
+    return 0;
+}
