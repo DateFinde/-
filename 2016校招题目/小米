@@ -1,1 +1,27 @@
+二进制
+世界上有10种人，一种懂二进制，一种不懂。那么你知道两个int32整数m和n的二进制表达，有多少个位(bit)不同么？
+
+输入
+1999 2299
+输出
+7
+
+
+class Solution {
+public:
+    int countBitDiff(int m, int n) {
+        int count=0;
+        int number=m^n;
+        while(number)
+        {
+            ++count;
+            number=number&(number-1);
+        }
+        
+        return count;
+    }
+};
+
+
+
 
