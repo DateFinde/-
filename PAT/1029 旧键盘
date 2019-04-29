@@ -1,0 +1,71 @@
+旧键盘上坏了几个键，于是在敲一段文字的时候，对应的字符就不会出现。现在给出应该输入的一段文字、以及实际被输入的文字，请你列出肯定坏掉的那些键。
+
+输入格式：
+输入在 2 行中分别给出应该输入的文字、以及实际被输入的文字。每段文字是不超过 80 个字符的串，由字母 A-Z（包括大、小写）、
+数字 0-9、以及下划线 _（代表空格）组成。题目保证 2 个字符串均非空。
+
+输出格式：
+按照发现顺序，在一行中输出坏掉的键。其中英文字母只输出大写，每个坏键只输出一次。题目保证至少有 1 个坏键。
+
+输入样例：
+7_This_is_a_test
+_hs_s_a_es
+输出样例：
+7TI
+
+
+#include <set>
+#include <map>
+#include <deque> 
+#include <list>
+#include <bitset>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+#include <assert.h>
+
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <cctype>
+#include <cstdlib>
+#include <iomanip>
+using namespace std;
+
+struct node{
+	int address;
+	int data;
+	int next;
+};
+
+/*int cmp(goods a,goods b)
+{
+	return a.unit>b.unit;
+}*/
+int main(int argc, char** argv) {
+	string a,b;
+	string result;
+	cin>>a>>b;
+	for(int i=0;i<a.length();++i){
+		if(b.find(a[i])==string::npos&&result.find(toupper(a[i]))==string::npos){
+			result+=toupper(a[i]);
+		}
+	}
+	cout<<result;
+	
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+

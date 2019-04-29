@@ -1,0 +1,54 @@
+正整数 A 的“DA为 1 位整数）部分”定义为由 A 中所有 DA 组成的新整数 PA。例如：给定 A=3862767，DA = 6，则 A 的“6部分”PA是 66，因为 A 中有 2 个 6。
+
+现给定 A、DA、B、DB，请编写程序计算 PA+PB。
+
+输入格式：
+输入在一行中依次给出 A、DA、B、DB，中间以空格分隔，其中 0<A,B<10^10。
+
+输出格式：
+在一行中输出 PA+PB的值。
+
+输入样例 1：
+3862767 6 13530293 3
+输出样例 1：
+399
+输入样例 2：
+3862767 1 13530293 8
+输出样例 2：
+0
+
+
+#include <set>
+#include <map>
+#include <deque> 
+#include <list>
+#include <bitset>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <assert.h>
+
+#include <iostream>
+#include <cmath>
+#include <stdlib.h>
+using namespace std;
+
+int main(int argc, char** argv) {
+	string a, b;
+    int m, n, counta = 0, countb = 0, ta = 0, tb = 0;
+    cin >> a >> m >> b >> n;
+    for (int i = 0; i < a.length(); i++)
+        if (m == (a[i] - '0')) counta++;
+    for (int i = 0; i < b.length(); i++)
+        if (n == (b[i] - '0')) countb++;
+    if (counta != 0) ta = m;
+    if (countb != 0) tb = n;
+    for (int i = 1; i < counta; i++)
+        ta = 10 * ta + m;
+    for (int i = 1; i < countb; i++)
+        tb = 10 * tb + n;
+    cout << ta + tb;
+    return 0;
+}

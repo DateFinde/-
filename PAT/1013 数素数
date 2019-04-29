@@ -1,0 +1,73 @@
+令 Pi表示第 i 个素数。现任给两个正整数 M≤N≤10^4，请输出PM到PN的所有素数。
+
+输入格式：
+输入在一行中给出 M 和 N，其间以空格分隔。
+
+输出格式：
+输出从PM到PN的所有素数，每 10 个数字占 1 行，其间以空格分隔，但行末不得有多余空格。
+
+输入样例：
+5 27
+输出样例：
+11 13 17 19 23 29 31 37 41 43
+47 53 59 61 67 71 73 79 83 89
+97 101 103
+
+#include <set>
+#include <map>
+#include <deque> 
+#include <list>
+#include <bitset>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+#include <assert.h>
+
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <cctype>
+#include <cstdlib>
+#include <iomanip>
+using namespace std;
+
+bool isPrimer(int a)
+{
+	for(int i=2;i<=sqrt(a);++i){
+		if(a%i==0){
+			return false;
+		}
+	}
+	return true;
+}
+ 
+int main(int argc, char** argv) {
+	vector<int> result;
+	int count=0,num=2;
+	int m,n;
+	cin>>m>>n;
+	while(count<n){
+		if(isPrimer(num)){
+			++count;
+			if(count>=m){
+				result.push_back(num);
+			}
+		}
+		++num;
+	}
+	int flag=0;
+    for(int i=0;i<result.size();++i){
+    	flag++;
+    	if(flag%10!=1){
+    		cout<<" ";
+		}
+		cout<<result[i];
+		if(flag%10==0){
+			cout<<endl;
+		}
+	}
+    
+    return 0;
+}

@@ -1,0 +1,30 @@
+让我们定义D(n)为：D(n)=P(n+1)-P(n)，其中P(i)是第i个素数。显然有D(1)=1，且对于n>1有D(n)是偶数。“素数对猜想”认为“存在无穷多对相邻且差为2的素数”。现给定任意正整数N(<10
+^5 )，请计算不超过N的满足猜想的素数对的个数。
+
+输入格式:
+输入在一行给出正整数N。
+
+输出格式:
+在一行中输出不超过N的满足猜想的素数对的个数。
+
+输入样例:
+20
+输出样例:
+4
+
+
+#include <iostream>
+using namespace std;
+bool isprime(int a) {
+    for (int i = 2; i * i <= a; i++)
+        if (a % i == 0) return false;
+    return true;
+}
+int main() {
+    int N, cnt = 0;
+    cin >> N;
+    for (int i = 5; i <= N; i++)
+        if (isprime(i-2) && isprime(i)) cnt++;
+    cout << cnt;
+    return 0;
+}
