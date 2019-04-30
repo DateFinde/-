@@ -1,1 +1,187 @@
+1、最大乘积
+给定一个无序数组，包含正数、负数和0，要求从中找出3个数的乘积，使得乘积最大，要求时间复杂度：O(n)，空间复杂度：O(1)
+
+输入描述:
+第一行是数组大小n，第二行是无序整数数组A[n]
+输出描述:
+满足条件的最大乘积
+
+输入例子1:
+4
+3 4 1 2
+输出例子1:
+24
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    vector<long long> data(n,0);
+    for(int i=0;i<n;++i)
+    {
+        cin>>data[i];
+    }
+    sort(data.begin(),data.end());
+    long long k=0;
+    k=data[0]*data[1]*data[n-1];
+    long long m=data[n-1]*data[n-2]*data[n-3];
+    long long res=k>m?k:m;
+    cout<<res<<endl;
+    return 0;
+}
+
+
+2、大整数相乘
+有两个用字符串表示的非常大的大整数,算出他们的乘积，也是用字符串表示。不能用系统自带的大整数类型。
+
+输入描述:
+空格分隔的两个字符串，代表输入的两个大整数
+输出描述:
+输入的乘积，用字符串表示
+
+输入例子1:
+72106547548473106236 982161082972751393
+输出例子1:
+70820244829634538040848656466105986748
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    vector<int> data1,data2;
+    string word[2];
+    for(int i=0;i<2;++i)
+    {
+        cin>>word[i];
+    }
+    //字符转换为数值
+    for(int i=word[0].size()-1;i>=0;--i)
+    {
+        data1.push_back(word[0][i]-'0');
+    }
+    for(int i=word[1].size()-1;i>=0;--i)
+    {
+        data2.push_back(word[1][i]-'0');
+    }
+
+    //计算每一位的数值
+    vector<int> result(data1.size()+data2.size(),0);
+    for(int i=0;i<data1.size();++i)
+    {
+        for(int j=0;j<data2.size();++j)
+        {
+            result[i+j]+=data1[i]*data2[j];
+        }
+    }
+    for(int i=0;i<result.size()-1;++i)
+    {
+        result[i+1]+=result[i]/10;
+        result[i]=result[i]%10;
+    }
+
+    string output;
+    int len=data1.size()+data2.size();
+    //最高为不一定包含数值
+    while(result[len-1]==0)
+    {
+        len--;
+    }
+    for(int i=len-1;i>=0;--i)
+    {
+        output+=(result[i]+'0');
+    }
+    cout<<output<<endl;
+
+    return 0;
+
+}
+
+
+ 3、六一儿童节
+ 六一儿童节，老师带了很多好吃的巧克力到幼儿园。每块巧克力j的重量为w[j]，对于每个小朋友i，当他分到的巧克力大小达到h[i] (即w[j]>=h[i])，
+ 他才会上去表演节目。老师的目标是将巧克力分发给孩子们，使得最多的小孩上台表演。可以保证每个w[i]> 0且不能将多块巧克力分给一个孩子或将一
+ 块分给多个孩子。
+
+输入描述:
+第一行：n，表示h数组元素个数
+第二行：n个h数组元素
+第三行：m，表示w数组元素个数
+第四行：m个w数组元素
+输出描述:
+上台表演学生人数
+
+输入例子1:
+3
+2 2 3
+2
+3 1 
+输出例子1:
+1
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n,m;
+    cin>>n;
+    vector<int> h(n);
+    for(int i=0;i<n;++i)
+    {
+        cin>>h[i];
+    }
+    cin>>m;
+    vector<int> weight(m);
+    for(int i=0;i<m;++i)
+    {
+        cin>>weight[i];
+    }
+    sort(h.begin(),h.end());
+    sort(weight.begin(),weight.end());
+
+    int count=0;
+    for(int i=0,j=0;i<m&&j<n;++i)
+    {
+        if(weight[i]>=h[j])
+        {
+            count++;
+            ++j;
+        }
+    }
+    cout<<count<<endl;
+
+    return 0;
+
+}
+
+
+
+4、迷宫寻路
+假设一个探险家被困在了地底的迷宫之中，要从当前位置开始找到一条通往迷宫出口的路径。迷宫可以用一个二维矩阵组成，有的部分是墙，有的部分是路。
+迷宫之中有的路上还有门，每扇门都在迷宫的某个地方有与之匹配的钥匙，只有先拿到钥匙才能打开门。请设计一个算法，帮助探险家找到脱困的最短路径。
+如前所述，迷宫是通过一个二维矩阵表示的，每个元素的值的含义如下 0-墙，1-路，2-探险家的起始位置，3-迷宫的出口，大写字母-门，小写字母-对应大
+写字母所代表的门的钥匙
+
+输入描述:
+迷宫的地图，用二维矩阵表示。第一行是表示矩阵的行数和列数M和N
+后面的M行是矩阵的数据，每一行对应与矩阵的一行（中间没有空格）。M和N都不超过100, 门不超过10扇。
+输出描述:
+路径的长度，是一个整数
+
+输入例子1:
+5 5
+02111
+01a0A
+01003
+01001
+01111
+输出例子1:
+7
+
 
