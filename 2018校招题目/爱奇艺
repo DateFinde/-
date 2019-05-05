@@ -1,0 +1,447 @@
+1、循环数比较
+对于任意两个正整数x和k,我们定义repeat(x, k)为将x重复写k次形成的数,例如repeat(1234, 3) = 123412341234,repeat(20,2) = 2020.
+牛牛现在给出4个整数x1, k1, x2, k2, 其中v1 = (x1, k1), v2 = (x2, k2),请你来比较v1和v2的大小。
+
+输入描述:
+输入包括一行,一行中有4个正整数x1, k1, x2, k2(1 ≤ x1,x2 ≤ 10^9, 1 ≤ k1,k2 ≤ 50),以空格分割
+输出描述:
+如果v1小于v2输出"Less",v1等于v2输出"Equal",v1大于v2输出"Greater".
+
+输入
+1010 3 101010 2
+输出
+Equal
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int k1,k2;
+    string x1,x2;
+    cin>>x1>>k1>>x2>>k2;
+
+    string temp=x1;
+    for(int i=1;i<k1;++i)
+    {
+        x1=x1+temp;
+    }
+    temp=x2;
+    for(int i=1;i<k2;++i)
+    {
+        x2=x2+temp;
+    }
+
+    if(x1.size()>x2.size())
+    {
+        cout<<"Greater"<<endl;
+    }
+    else if(x1.size()<x2.size())
+    {
+        cout<<"Less"<<endl;
+    }
+    else
+    {
+        if(x1==x2)
+        {
+            cout<<"Equal"<<endl;
+        }
+        else if(x1>x2)
+        {
+            cout<<"Greater"<<endl;
+        }
+        else
+        {
+            cout<<"Less"<<endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+2、DNA序列
+牛牛又从生物科研工作者那里获得一个任务,这次牛牛需要帮助科研工作者从DNA序列s中找出最短没有出现在DNA序列s中的DNA片段的长度。
+例如:s = AGGTCTA序列中包含了所有长度为1的('A','C','G','T')片段,但是长度为2的没有全部包含,例如序列中不包含"AA",所以输出2。
+
+输入描述:
+输入包括一个字符串s,字符串长度length(1 ≤ length ≤ 2000),其中只包含'A','C','G','T'这四种字符。
+输出描述:
+输出一个正整数,即最短没有出现在DNA序列s中的DNA片段的长度。
+
+输入:
+AGGTCTA
+输出:
+2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string data;
+    cin>>data;
+
+    int targetNum=1;
+    for(int i=1;i<=data.size();++i)
+    {
+        targetNum*=4;
+
+        set<string> cntSet;
+        for(int j=0;j<data.size();++j)
+        {
+            if(i+j>=data.size())
+            {
+                break;
+            }
+
+            string subStr=data.substr(j,i);
+            cntSet.insert(subStr);
+        }
+
+        if(cntSet.size()<targetNum)
+        {
+            cout<<i;
+            break;
+        }
+    }
+
+    return 0;
+}
+
+
+3、判断题
+牛牛参加了一场考试,考试包括n道判断题,每做对一道题获得1分,牛牛考试前完全没有准备,所以考试只能看缘分了,牛牛在考试中一共猜测了t道题目的
+答案是"正确",其他的牛牛猜为"错误"。考试结束后牛牛知道实际上n道题中有a个题目的答案应该是"正确",但是牛牛不知道具体是哪些题目,牛牛希望
+你能帮助他计算可能获得的最高的考试分数是多少。
+
+输入描述:
+输入包括一行,一行中有三个正整数n, t, a(1 ≤ n, t, a ≤ 50), 以空格分割
+输出描述:
+输出一个整数,表示牛牛可能获得的最高分是多少。
+
+输入
+3 1 2
+输出
+2
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n,answer,real;
+    cin>>n>>answer>>real;
+
+    int sum=0;
+    sum+=min(answer,real);
+    sum+=n-max(answer,real);
+
+    cout<<sum<<endl;
+
+    return 0;
+}
+
+
+4、删除重复字符
+牛牛有一个由小写字母组成的字符串s,在s中可能有一些字母重复出现。比如在"banana"中,字母'a'和字母'n'分别出现了三次和两次。
+但是牛牛不喜欢重复。对于同一个字母,他只想保留第一次出现并删除掉后面出现的字母。请帮助牛牛完成对s的操作。
+
+输入描述:
+输入包括一个字符串s,s的长度length(1 ≤ length ≤ 1000),s中的每个字符都是小写的英文字母('a' - 'z')
+输出描述:
+输出一个字符串,表示满足牛牛要求的字符串
+
+输入
+banana
+输出
+ban
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string data;
+    getline(cin,data);
+
+    map<char,int> result;
+    for(int i=0;i<data.size();++i)
+    {
+        if(result.find(data[i])==result.end())
+        {
+            result[data[i]]=1;
+        }
+        else
+        {
+            ++result[data[i]];
+        }
+    }
+
+    for(int i=0;i<data.size();++i)
+    {
+        if(result[data[i]])
+        {
+            cout<<data[i];
+            result[data[i]]=0;
+        }
+    }
+
+    return 0;
+}
+
+
+5、空中旅行
+牛牛有羊羊有了属于他们自己的飞机。于是他们进行几次连续的飞行。f[i]表示第i次飞行所需的燃油的升数。飞行只能按照f数组所描述的顺序进行。
+起初飞机里有s升燃油,为了正常飞行,每次飞行前飞机内燃油量应大于等于此处飞行所需要的燃油量。请帮助他们计算在不进行加油的情况下他们能进行的飞行次数。
+
+输入描述:
+输入包括两行,第一行包括两个整数n和s(1 ≤ n ≤ 50, 1 ≤ s ≤ 1000),分别表示计划飞行的次数和飞起初始状态下有的燃油量。
+第二行包括n个整数f[i], (1 ≤ f[i] ≤ 1000), 表示每次计划飞行所需要的燃油量。
+输出描述:
+输出一个整数,表示他们能进行的飞行次数。
+
+输入
+7 10
+1 2 3 4 5 6 7
+输出
+4
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n,s;
+    cin>>n>>s;
+    int f[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>f[i];
+    }
+
+    int Count=0;
+    int index=0;
+    while(index<n&&f[index++]<=s)
+    {
+        Count++;
+        s-=f[index-1];
+    }
+    cout<<Count<<endl;
+
+    return 0;
+}
+
+
+6、回文素数
+如果一个整数只能被1和自己整除,就称这个数是素数。
+如果一个数正着反着都是一样,就称为这个数是回文数。例如:6, 66, 606, 6666
+如果一个数字既是素数也是回文数,就称这个数是回文素数
+牛牛现在给定一个区间[L, R],希望你能求出在这个区间内有多少个回文素数。
+
+输入描述:
+输入包括一行,一行中有两个整数(1 ≤ L ≤ R ≤ 1000)
+输出描述:
+输出一个整数,表示区间内回文素数个数。
+
+输入
+100 150
+输出
+2
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPrime(int number)
+{
+    for(int k=2;k<=sqrt(number);++k)
+    {
+        if(number%k==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool isSymmetry(int number)
+{
+    string temp=to_string(number);
+    for(int i=0;i<temp.size()/2;++i)
+    {
+        if(temp[i]!=temp[temp.size()-i-1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int l,r;
+    cin>>l>>r;
+
+    int Count=0;
+    for(int i=l+(1-l%2);i<=r;i=i+2)
+    {
+        if(isSymmetry(i)&&isPrime(i))
+        {
+            //cout<<to_string(i)<<endl;
+            Count++;
+        }
+    }
+    cout<<Count<<endl;
+
+    return 0;
+}
+
+
+
+7、排序
+牛牛有一个长度为n的整数序列,牛牛想对这个序列进行重排为一个非严格升序序列。牛牛比较懒惰,他想移动尽量少的数就完成重排,请你帮他计算一下他最少
+需要移动多少个序列中的元素。(当一个元素不在它原来所在的位置,这个元素就是被移动了的)
+
+输入描述:
+输入包括两行,第一行一个整数n(1 ≤ n ≤ 50),即序列的长度
+第二行n个整数x[i](1 ≤ x[i] ≤ 100),即序列中的每个数
+输出描述:
+输出一个整数,即最少需要移动的元素个数
+
+输入
+3
+3 2 1
+输出
+2
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n;
+    cin>>n;
+    int data[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>data[i];
+    }
+
+    int a[n];
+    memcpy(a,data,sizeof(data));
+    sort(a,a+n);
+
+    int Count=0;
+    for(int i=0;i<n;++i)
+    {
+        if(data[i]!=a[i])
+        {
+            Count++;
+        }
+    }
+    cout<<Count<<endl;
+
+    return 0;
+}
+
+
+8、字符串价值
+有一种有趣的字符串价值计算方式:统计字符串中每种字符出现的次数,然后求所有字符次数的平方和作为字符串的价值
+例如: 字符串"abacaba",里面包括4个'a',2个'b',1个'c',于是这个字符串的价值为4 * 4 + 2 * 2 + 1 * 1 = 21
+牛牛有一个字符串s,并且允许你从s中移除最多k个字符,你的目标是让得到的字符串的价值最小。
+
+输入描述:
+输入包括两行,第一行一个字符串s,字符串s的长度length(1 ≤ length ≤ 50),其中只包含小写字母('a'-'z')。
+第二行包含一个整数k(0 ≤ k ≤ length),即允许移除的字符个数。
+输出描述:
+输出一个整数,表示得到的最小价值
+
+输入
+aba
+1
+输出
+2
+
+
+C++:
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    map<char,int> result;
+    string data;
+    int n;
+    cin>>data>>n;
+
+    for(int i=0;i<data.size();++i)
+    {
+        if(result.find(data[i])!=result.end())
+        {
+            result[data[i]]++;
+        }
+        else
+        {
+            result[data[i]]=1;
+        }
+    }
+
+    vector<int> number(result.size());
+    for(auto it:result)
+    {
+        number.push_back(it.second);
+    }
+
+    int sum=0;
+    while(n)
+    {
+        int max=number[0];
+        int index=0;
+        for(int i=1;i<number.size();++i)
+        {
+            if(number[i]>max)
+            {
+                max=number[i];
+                index=i;
+            }
+        }
+
+        n--;
+        number[index]--;
+    }
+    
+    for(int i=0;i<number.size();++i)
+    {
+        sum+=number[i]*number[i];
+    }
+    cout<<sum<<endl;
+
+    return 0;
+}
+
+Python:
+s=list(input())
+k=int(input())
+Set=set(s)
+
+time=[]
+for x in Set:
+    temp=s.count(x)
+    time.append(temp)
+time.sort(reverse=True)
+
+while k>0:
+    temp=max(time)
+    time[time.index(temp)]-=1
+    k-=1
+
+result=0
+for i in range(len(time)):
+    result+=time[i]**2
+print(result)
