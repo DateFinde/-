@@ -1161,7 +1161,7 @@ int main()
 输出
 1.5
 
-
+//不设置前面已计算的标记会复杂度超出，只可以通过70%
 #include <bits/stdc++.h>
 using namespace std;
 
