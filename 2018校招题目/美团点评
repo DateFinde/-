@@ -1,0 +1,83 @@
+1、数字字符
+在十进制表示中，任意一个正整数都可以用字符’0’-‘9’表示出来。但是当’0’-‘9’这些字符每种字符的数量有限时，可能有些正整数就无法表示出来了。
+比如你有两个‘1’，一个‘2’，那么你能表示出11，12，121等等，但是无法表示出10，122，200等数。 
+现在你手上拥有一些字符，它们都是’0’-‘9’的字符。你可以选出其中一些字符然后将它们组合成一个数字，那么你所无法组成的最小的正整数是多少？
+
+输入描述:
+第一行包含一个由字符’0’-‘9’组成的字符串，表示你可以使用的字符。
+1 ≤字符串长度≤ 1000
+输出描述:
+输出你所无法组成的最小正整数
+
+示例1
+输入
+55
+输出
+1
+示例2
+输入
+123456789
+输出
+10
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	string data;
+	cin>>data;
+
+	map<char,int> temp;
+	for(int i=0;i<data.size();++i)
+    {
+        if(temp.find(data[i])!=temp.end())
+        {
+            temp[data[i]]++;
+        }
+        else
+        {
+            temp[data[i]]=1;
+        }
+    }
+
+    if(temp.size()<9&&temp.find('0')==temp.end())
+    {
+        for(char it='1';it<='9';++it)
+        {
+            if(temp.find(it)==temp.end())
+            {
+                cout<<it-'0'<<endl;
+                break;
+            }
+        }
+    }
+    else if(temp.size()==9&&temp.find('0')==temp.end())
+    {
+        cout<<10<<endl;
+    }
+    else
+    {
+        string result="";
+        int Min=data.size()+1;
+        for(char i='1';i<='9';++i)
+        {
+            if(Min<temp[i])
+            {
+                Min=temp[i];
+            }
+        }
+
+        result+=char(Min+'0');
+        for(int i=0;i<=temp['0'];++i)
+        {
+            result+='0';
+        }
+
+        cout<<result<<endl;
+    }
+
+	return 0;
+}
+
