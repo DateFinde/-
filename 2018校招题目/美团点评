@@ -81,3 +81,40 @@ int main()
 	return 0;
 }
 
+
+2、bit位数
+两个int32整数m和n的二进制表达，计算有多少个位(bit)不同？
+
+输入描述:
+一行中给定两个数字
+输出描述:
+输出这两个数字中bit不同的个数
+
+输入
+15 8
+输出
+3
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int a,b;
+    cin>>a>>b;
+    int Count=0;
+
+    int temp=a^b;
+    while(temp)
+    {
+        ++Count;
+        temp=(temp-1)&temp;
+    }
+    cout<<Count<<endl;
+
+	return 0;
+}
+
+
+3、
