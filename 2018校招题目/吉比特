@@ -1,0 +1,146 @@
+1、求素数
+输入M、N，1 < M < N < 1000000，求区间[M,N]内的所有素数的个数。素数定义：除了1以外，只能被1和自己整除的自然数称为素数
+
+输入描述:
+两个整数M，N
+输出描述:
+区间内素数的个数
+
+输入
+2 10
+输出
+4
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int m,n;
+    cin>>m>>n;
+    if(m>n)
+    {
+        swap(m,n);
+    }
+    int Count=0;
+    if(m==2)
+    {
+        ++Count;
+        ++m;
+    }
+    for(int i=m%2==0?m+1:m;i<=n;i+=2)
+    {
+        bool flag=true;
+        for(int j=2;j<=sqrt(i);++j)
+        {
+            if(i%j==0)
+            {
+                flag=false;
+                break;
+            }
+        }
+
+        if(flag)
+        {
+            ++Count;
+        }
+    }
+    cout<<Count<<endl;
+
+	return 0;
+}
+
+
+
+2、最大差值
+给定一个未排序的数列，找到此数列在已排序状态下的两个相邻值的最大差值，少于两个值时返回0。例如：给定数列 [1,3,2,0,1,6,8] 则 最大
+差值为3。注意：请尽量使用时间复杂度为O(n)的方案。
+
+输入描述:
+第一行输入单个整数N作为数列的大小，第二行输入所有数列中的元素M，共N个。0 < N <= 1000000, 0 < M < 2100000000
+输出描述:
+数列的最大差值
+
+输入
+3
+1 10 5
+输出
+5
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    unsigned int n;
+    cin>>n;
+    double* data=new double[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>data[i];
+    }
+    sort(data,data+n);
+
+    double Max=0;
+    for(int i=1;i<n;++i)
+    {
+        if(Max<data[i]-data[i-1])
+        {
+            Max=data[i]-data[i-1];
+        }
+    }
+    delete[] data;
+    cout<<Max<<endl;
+
+	return 0;
+}
+
+
+
+3、字母数字混合排序
+输入一串字符，包含数字[0-9]和小写字母[a-z]，要求按数字从小到大、字母从a到z排序，并且所有数字排在字母后面
+
+输入描述:
+一串字符
+输出描述:
+按规则排序的一串字符
+
+输入
+a31bz
+输出
+abz13
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string t1="";
+    string t2="";
+    string data;
+    cin>>data;
+    for(int i=0;i<data.size();++i)
+    {
+        char ch=data[i];
+        if(ch>='0'&&ch<='9')
+        {
+            t1+=ch;
+        }
+        else
+        {
+            t2+=ch;
+        }
+    }
+    sort(t1.begin(),t1.end());
+    sort(t2.begin(),t2.end());
+    cout<<t2<<t1<<endl;
+
+	return 0;
+}
+
+
+
+4、
