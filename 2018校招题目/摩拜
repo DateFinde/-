@@ -1,0 +1,118 @@
+1、倒着输出整数
+用C写一个输入的整数，倒着输出整数的函数，要求用递归方法。
+
+输入描述:
+一个整数
+输出描述:
+该整数的倒序输出
+
+输入
+-1563
+输出
+-3651
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int number;
+    cin>>number;
+
+    if(!abs(number))
+    {
+        cout<<0<<endl;
+        return 0;
+    }
+    if(number<0)
+    {
+        cout<<"-";
+        number=abs(number);
+    }
+
+    bool flag=true;
+    while(number)
+    {
+        int temp=number%10;
+        if(temp==0&&flag)
+        {
+            number/=10;
+        }
+        else
+        {
+            flag=false;
+            cout<<temp;
+            number/=10;
+        }
+    }
+
+    return 0;
+}
+
+
+
+2、返回小于N的质数个数
+请考虑性能
+
+输入描述:
+一个整数N
+输出描述:
+小于N的质数数量
+
+输入
+10
+输出
+4
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPrimer(int number)
+{
+    for(int i=2;i<=sqrt(number);++i)
+    {
+        if(number%i==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    bool* data=new bool[n+1];
+    for(int i=0;i<=n;++i)
+    {
+        data[i]=false;
+    }
+    data[2]=true;
+    for(int i=3;i<=n;i+=2)
+    {
+        if(isPrimer(i))
+        {
+            data[i]=true;
+        }
+    }
+
+    int Count=0;
+    for(int i=0;i<=n;++i)
+    {
+        if(data[i])
+        {
+            ++Count;
+        }
+    }
+    cout<<Count<<endl;
+    delete [] data;
+
+    return 0;
+}
+
+
+
+3、分石头
