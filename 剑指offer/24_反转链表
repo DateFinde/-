@@ -1,0 +1,28 @@
+反转链表
+题目：定义一个函数，输入一个链表的头结点，反转该链表并输出反转后链表的
+头结点。
+
+ListNode* ReverseList(ListNode* pHead)
+{
+	if(pHead==nullptr)
+	{
+		return nullptr;
+	}
+	
+	ListNode* pTemp=nullptr;
+	ListNode* pCur=pHead;
+	ListNode* pNode=nullptr;
+	while(pCur)
+	{
+		ListNode* p=pCur->next;
+		if(p==nullptr)
+		{
+			pTemp=pCur;
+		}
+		
+		pCur->next=pNode;
+		pNode=pCur;
+		pCur=p;
+	}
+	return pTemp;
+}
