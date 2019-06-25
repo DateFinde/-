@@ -1,0 +1,28 @@
+二叉树的镜像
+题目：请完成一个函数，输入一个二叉树，该函数输出它的镜像。
+
+void MirrorRecursively(BinaryTreeNode *pNode)
+{
+	if(pNode==nullptr)
+	{
+		return;
+	}
+	
+	if(pNode->left==nullptr && pNode->right==nullptr)
+	{
+		return;
+	}
+	
+	BinaryTreeNode *pTemp=pNode->left;
+	pNode->left=pNode->right;
+	pNode->right=pTemp;
+	
+	if(pNode->left)
+	{
+		MirrorRecursively(pNode->left);
+	}
+	if(pNode->right)
+	{
+		MirrorRecursively(pNode->right);
+	}
+}
