@@ -1,0 +1,36 @@
+包含min函数的栈
+题目：定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的min
+函数。在该栈中，调用min、push及pop的时间复杂度都是O(1)。
+
+stack<int> data;
+    stack<int> help;
+    
+    void push(int value) 
+    {
+        data.push(value);
+        
+        if(help.size() == 0 || help.top() > value)
+        {
+            help.push(value);
+        }
+        else
+        {
+            help.push(help.top());
+        }
+    }
+    void pop() 
+    {
+        if(data.size() > 0 && help.size() > 0)
+        {
+            data.pop();
+            help.pop();
+        }
+    }
+    int top() 
+    {
+        return data.top();
+    }
+    int min() 
+    {
+        return help.top();
+    }
