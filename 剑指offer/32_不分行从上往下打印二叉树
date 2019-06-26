@@ -1,0 +1,25 @@
+不分行从上往下打印二叉树
+题目：从上往下打印出二叉树的每个结点，同一层的结点按照从左到右的顺序打印。
+
+vector<int> PrintFromTopToBottom(TreeNode* root) {
+        vector<int> listResult;
+        deque<TreeNode *> dequeTreeNode;
+        
+        if(root == nullptr)
+            return listResult;
+        
+        dequeTreeNode.push_back(root);
+        while(!dequeTreeNode.empty())
+        {
+            TreeNode* pNode = dequeTreeNode.front();
+            dequeTreeNode.pop_front();
+            listResult.push_back(pNode->val);
+            
+            if(pNode->left)
+                dequeTreeNode.push_back(pNode->left);
+            if(pNode->right)
+                dequeTreeNode.push_back(pNode->right);
+        }
+        
+        return listResult;
+    }
