@@ -1,0 +1,82 @@
+丑数
+题目：我们把只包含因子2、3和5的数称作丑数（Ugly Number）。求按从小到
+大的顺序的第1500个丑数。例如6、8都是丑数，但14不是，因为它包含因子7。
+习惯上我们把1当做第一个丑数。
+
+// ====================算法1的代码====================
+bool IsUgly(int number)
+{
+    while(number % 2 == 0)
+        number /= 2;
+    while(number % 3 == 0)
+        number /= 3;
+    while(number % 5 == 0)
+        number /= 5;
+
+    return (number == 1) ? true : false;
+}
+
+int GetUglyNumber_Solution1(int index)
+{
+    if(index <= 0)
+        return 0;
+
+    int number = 0;
+    int uglyFound = 0;
+    while(uglyFound < index)
+    {
+        ++number;
+
+        if(IsUgly(number))
+            ++uglyFound;
+    }
+
+    return number;
+}
+
+// ====================算法2的代码====================
+int GetUglyNumber_Solution2(int index)
+{
+	if(index <= 0)
+	{
+		return 0;
+	}
+	
+	int* data = new int[index];
+	data[0] = 1;
+	int size = 1;
+	
+	int a = b = c = 0;
+	while(size < index)
+	{
+		int min = (data[a] * 2, data[a] * 3, data[a] * 5);
+		data[size] = min;
+		
+		while(data[a] * 2 <= data[size])
+		{
+			++a;
+		}
+		while(data[b] * 2 <= data[size])
+		{
+			++b;
+		}
+		while(data[c] * 2 <= data[size])
+		{
+			++c;
+		}
+		
+		++size;
+	}
+	
+	int result = data[index - 1];
+	delete[] data;
+	return result;
+}
+
+int Min(int a, int b, int c)
+{
+	int min = a < b ? a : b;
+	min = min < c ? min : c;
+	
+	return min;
+}
