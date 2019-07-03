@@ -1,0 +1,31 @@
+二叉搜索树的第k个结点
+题目：给定一棵二叉搜索树，请找出其中的第k大的结点。
+
+const BinaryTreeNode* KthNode(const BinaryTreeNode* pRoot, unsigned int k)
+{
+    if(pRoot == nullptr || k == 0)
+        return nullptr;
+
+    return KthNodeCore(pRoot, k);
+}
+
+const BinaryTreeNode* KthNodeCore(const BinaryTreeNode* pRoot, unsigned int& k)
+{
+    const BinaryTreeNode* target = nullptr;
+
+    if(pRoot->m_pLeft != nullptr)
+        target = KthNodeCore(pRoot->m_pLeft, k);
+
+    if(target == nullptr)
+    {
+        if(k == 1)
+            target = pRoot;
+
+        k--;
+    }
+
+    if(target == nullptr && pRoot->m_pRight != nullptr)
+        target = KthNodeCore(pRoot->m_pRight, k);
+
+    return target;
+}
